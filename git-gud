@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+TEMPFILE=$(mktemp)
+git diff HEAD^..HEAD | awk "BEGIN {passed=0}
+{if(\$1 ~ /^@@.*/){passed=1}
+if(\$1 ~ /^diff.*/){passed=0}
+if(passed==1 && \$1 ~ /^+.*/){print}}" | sed "s/^+//" > $TEMPFILE 
+echo $TEMPFILE
+oclint $TEMPFILE 2>&1 | awk "/Summary: TotalFiles.*/ {print}" | python showrant.py
