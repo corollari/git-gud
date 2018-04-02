@@ -1,0 +1,3 @@
+[submodule "linusrants"]
+	path = linusrants
+	url = https://github.com/corollari/linusrants
